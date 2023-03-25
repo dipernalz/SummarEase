@@ -1,0 +1,8 @@
+body {
+  margin: 0;
+}
+/* TODO: eliminate below if not used */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

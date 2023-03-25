@@ -1,0 +1,24 @@
+
+
+:root {
+  /* 
+    16px is the default font size set by browswers in the html tag.
+    This should never be changed so that vision-impared users can override it.
+    Therefore, 1rem (root em) is the width of an em-dash at 16px.
+    If you want a differnt default size for your site, change it in the body tag.
+    For example, if you want 20px, then set the size to 20/16 = 1.25rem.
+  */
+  --defatul-font-size: 1.25rem;
+
+  --primary-color-dark: #0B0B45;
+  --primary-background-color: #e0fbfc;
+  --secondary-accent-color: #c65102;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+main {
+  margin: 0 auto 0 auto;
+  padding: 0 0;
+}
