@@ -6,23 +6,25 @@ export default function Searchbar() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e, t) => {
+  const handleSubmit = async (e, t) => {
     e.preventDefault();
     setIsLoading(true);
     console.log("url is " + t);
-    fetch('http://localhost:8080/api/product', {
+    const resultData = await fetch('http://localhost:8080/api/product', {
         method: 'POST',
         mode: "cors",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({"url": t})
     }).then(response => {
-        console.log("Fetch response: ", response);
+        // console.log("Fetch response: ", response.json());
         if (response.ok) {
           setIsLoading(false);
+          return response.json()
         } else {
           throw response;
         }
       });
+    console.log(resultData);
   }
   return (
     <div>

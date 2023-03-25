@@ -60,7 +60,7 @@ def main():
         output["status"] = "success"
     else:
         output["status"] = "failure"
-    print(json.dumps(output))
+    print(json.dumps(output), end="")
 
 
 if __name__ == "__main__":

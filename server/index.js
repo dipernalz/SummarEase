@@ -36,10 +36,11 @@ app.post('/api/product', (req, res,next) => {
     python.stdout.on('data', function (data) {
         console.log('Pipe data from python script ...');
         dataToSend = data.toString();
-        // dataToSend = dataToSend.replace("'", "\"");
-        // console.log(dataToSend);
-        // console.log("After Data: ");
+        console.log(dataToSend);
+        console.log("Parsed Data: ");
         // console.log(JSON.parse("{\"reviews\": {\"positive\": [\"sdfjsdlkjsl\"]}}"));
+        dataToSend = JSON.parse(dataToSend);
+        console.log(dataToSend);
     });
     // in close event we are sure that stream from child process is closed
     python.on('close', (code) => {
@@ -48,7 +49,7 @@ app.post('/api/product', (req, res,next) => {
         // res.send(dataToSend)
         if(dataToSend !== undefined) {
             // var resp = JSON.parse(dataToSend)
-            res.status(200).json(JSON.parse(dataToSend));
+            res.status(200).json(dataToSend);
         } else {
             res.status(500);
         }
