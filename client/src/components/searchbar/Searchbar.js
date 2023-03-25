@@ -1,31 +1,14 @@
-import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import "./searchbar.css";
 
-export default function Searchbar() {
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e, t) => {
+export default function Searchbar(props) {
+  
+  const handleSubmit = async (e, searchTerm) => {
     e.preventDefault();
-    setIsLoading(true);
-    console.log("url is " + t);
-    const resultData = await fetch('http://localhost:8080/api/product', {
-        method: 'POST',
-        mode: "cors",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({"url": t})
-    }).then(response => {
-        // console.log("Fetch response: ", response.json());
-        if (response.ok) {
-          setIsLoading(false);
-          return response.json()
-        } else {
-          throw response;
-        }
-      });
-    console.log(resultData);
+    console.log("Searchbar calling prop fn");
+    props.urlCallback(searchTerm);
   }
+
   return (
     <div>
       <form className="search" onSubmit={(e) => {
@@ -42,8 +25,6 @@ export default function Searchbar() {
           <SearchIcon className="searchIcon" />
         </button>
       </form>
-      {!isLoading && <p>amazon review stuff</p>}
-      {isLoading && <p>Loading...</p>}
     </div>
   )
 }

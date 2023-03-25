@@ -6,7 +6,8 @@ To run the project, ensure that `npm` and `pip3` are installed.
 Then install dependencies with the following commands:
 1. Run `npm install` in the `client` directory.
 2. Run `pip3 install selenium` in the `server` directory.
-3. Run `pip3 install beautifulsoup4` in the `server` directory.
+3. Run `pip3 install bs4` in the `server` directory.
+4. Run `pip3 install lxml` in the `server` directory.
 
 # Running the development version
 To run locally, use the following commands: 
