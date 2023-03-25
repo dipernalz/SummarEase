@@ -56,7 +56,8 @@ export default function Home() {
       </div>}
       </div>
       {successfulLoad && <div className="product-summary-section">
-        <div>Pros:</div>
+      <div className="pros-cons">
+        <div>Pros:
         <ul>
           {prolist.map((listitem, idx) => {
             return (
@@ -64,7 +65,8 @@ export default function Home() {
           );
           })}
         </ul>
-        <div>Cons: </div>
+        </div>
+        <div>Cons:
         <ul>
           {conslist.map((listitem, idx) => {
             return (
@@ -72,6 +74,8 @@ export default function Home() {
           );
           })}
         </ul>
+        </div>
+      </div>
       </div>}
     </div>
   )
