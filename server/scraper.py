@@ -1,3 +1,4 @@
+#!/bin/python3
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import sys

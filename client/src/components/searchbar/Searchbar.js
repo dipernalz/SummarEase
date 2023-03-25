@@ -7,11 +7,18 @@ export default function Searchbar() {
   const handleSubmit = (e, t) => {
     e.preventDefault();
     console.log("url is " + t);
-    fetch('http://localhost:3000/api/product', {
+    fetch('http://localhost:8080/api/product', {
         method: 'POST',
+        mode: "cors",
         headers: {'Content-Type': 'application/json'},
-        body: {url: t}
-    })
+        body: JSON.stringify({"url": t})
+    }).then(response => {
+        console.log("Fetch response: ", response);
+        if (response.ok) {
+            return response.json();
+        }
+        throw response;
+      });
   }
   return (
     <div>
