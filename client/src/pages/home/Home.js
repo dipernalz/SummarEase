@@ -4,8 +4,11 @@ import "./home.css";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState("");
-
+  const [successfulLoad, setSuccessfulLoad] = useState(false);
+  // const [responseData, setResponseData] = useState({});
+  const [prolist, setProlist] = useState([]);
+  const [conslist, setConlist] = useState([]);
+  
   const queryBackend = async (searchVal) => {
     console.log("callback function called");
     setIsLoading(true);
@@ -25,10 +28,22 @@ export default function Home() {
       });
     console.log(resultData);
     try {
-      setResponseData(resultData.reviews.critical[0]);
+      // setResponseData(resultData);
+      // var arr = [];
+      // for(var i = 0; i < resultData.pros.length; i++) {
+      //   arr.push({"id": i, "text": resultData.pros[i]});
+      // }
+      // console.log(arr);
+      if(resultData.status === "success") {
+        setProlist(resultData.pros);
+        setConlist(resultData.cons);
+        setSuccessfulLoad(true);
+      } else {
+        console.log("Scraping/summary failed");
+        console.log(resultData);
+      }
     } catch (error) {
       console.error(error);
-      setResponseData(resultData.toString());
     }
 
   }
@@ -40,9 +55,24 @@ export default function Home() {
       {isLoading && <div><p>Loading...</p>
       </div>}
       </div>
-      <div>
-      {responseData}
-      </div>
+      {successfulLoad && <div className="product-summary-section">
+        <div>Pros:</div>
+        <ul>
+          {prolist.map((listitem, idx) => {
+            return (
+            <li key={idx}>{listitem.toString()}</li>
+          );
+          })}
+        </ul>
+        <div>Cons: </div>
+        <ul>
+          {conslist.map((listitem, idx) => {
+            return (
+            <li key={idx}>{listitem.toString()}</li>
+          );
+          })}
+        </ul>
+      </div>}
     </div>
   )
 }
