@@ -1,5 +1,6 @@
 #!/bin/python3
 from bs4 import BeautifulSoup
+import json
 from selenium import webdriver
 import sys
 import re
@@ -59,7 +60,7 @@ def main():
         output["status"] = "success"
     else:
         output["status"] = "failure"
-    print(output)
+    print(json.dumps(output))
 
 
 if __name__ == "__main__":

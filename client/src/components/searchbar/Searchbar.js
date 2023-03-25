@@ -4,8 +4,11 @@ import "./searchbar.css";
 
 export default function Searchbar() {
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = (e, t) => {
     e.preventDefault();
+    setIsLoading(true);
     console.log("url is " + t);
     fetch('http://localhost:8080/api/product', {
         method: 'POST',
@@ -15,9 +18,10 @@ export default function Searchbar() {
     }).then(response => {
         console.log("Fetch response: ", response);
         if (response.ok) {
-            return response.json();
+          setIsLoading(false);
+        } else {
+          throw response;
         }
-        throw response;
       });
   }
   return (
@@ -33,9 +37,11 @@ export default function Searchbar() {
           required
         />
         <button className="searchButton">
-              <SearchIcon className="searchIcon" />
+          <SearchIcon className="searchIcon" />
         </button>
       </form>
+      {!isLoading && <p>amazon review stuff</p>}
+      {isLoading && <p>Loading...</p>}
     </div>
   )
 }
