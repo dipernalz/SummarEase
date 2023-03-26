@@ -1,6 +1,9 @@
 import Searchbar from "../../components/searchbar/Searchbar";
 import React, { useState } from 'react';
 import EmailIcon from '@mui/icons-material/Email';
+import TextField from '@mui/material/TextField';
+import styled from "styled-components";
+import { InputAdornment, IconButton } from '@mui/material';
 import "./home.css";
 
 export default function Home() {
@@ -70,62 +73,89 @@ export default function Home() {
     console.log("sent email");
   }
 
+  const CustomTextField = styled(TextField)`
+    & label.Mui-focused {
+      color: #0B0B45;
+    }
+    & label {
+      color: #0B0B45;
+    }
+    & .MuiOutlinedInput-root {
+      border-radius: 20px;
+      &.Mui-focused fieldset {
+        border-color: #c65102;
+      }
+      &:hover fieldset {
+        border-color: #c65102;
+      }
+      & fieldset {
+        border-color: #c65102;
+      }
+    }
+  `;
+
 
   return (
     <div className="home-page">
       <div className="info-section">
         <div className="info-blurb">
-          Amazon product review summarizer.<br/>Simply enter a product listing url from amazon.com, and receive a summary of the pros and cons of the product!
+          Amazon product review summarizer.<br/>Enter a product listing url from amazon.com, and receive a summary of the pros and cons of the product!
         </div>
       </div>
       <Searchbar urlCallback={queryBackend}/>
       <div>
         {/* {!isLoading && <p>Amazon review stuff:</p>} */}
-      {isLoading && <div><p className="loading">Loading...</p><div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-      </div>}
+        {isLoading && <div><p className="loading">Loading...</p><div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>}
       </div>
       {successfulLoad &&
-        <div className="emailsender-container">
-        <form className="emailsender" onSubmit={(e) => {
-          handleSubmitEmail(e, document.getElementById("emailTerm").value);
-        }}>
-          <input 
-            id="emailTerm"
-            className="emailTerm"
-            type="text"
-            placeholder="Enter your email"
-            required
+        <div className="emailsender-container" style = {{ width: "20%" }}>
+          <form className="emailsender" onSubmit={(e) => {
+            handleSubmitEmail(e, document.getElementById("emailTerm").value);
+          }}>
+          <CustomTextField style = {{ width: "100%" }} label="Enter your email" type="search" id="emailTerm" required InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" style={{ paddingRight: 10 }}>
+                <IconButton edge="end" className="emailSendButton" type="submit">
+                  <EmailIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+          InputLabelProps={{
+            required: false
+          }}
           />
-          <button className="emailSendButton">
-            <EmailIcon/>
-          </button>
-        </form>
+          </form><br></br>
         </div>}
-      {successfulLoad && <div className="product-card">
+      {successfulLoad && 
+      <div className="product-card">
         <div className="titleitems"><div className="prodTitle">{productTitle}</div>
-          <img src={productImg}></img>
+          <img src={productImg} alt="amazon product"></img>
         </div>
         <div className="product-summary-section">
-        <div className="pros-cons">
-          <div className="pc-item"><span className="procon-title">Pros:</span>
-          <ul>
-            {prolist.map((listitem, idx) => {
-              return (
-              <li key={idx}>{listitem.toString()}</li>
-            );
-            })}
-          </ul>
+          <div className="pros-cons">
+            <div className="pc-item"><span className="procon-title">Pros:</span>
+              <ul>
+                {prolist.map((listitem, idx) => {
+                  return (
+                  <li key={idx}>{listitem.toString()}</li>
+                );
+                })}
+              </ul>
+            </div>
+            <div className="pc-item"><span className="procon-title">Cons:</span>
+              <ul>
+                {conslist.map((listitem, idx) => {
+                  return (
+                  <li key={idx}>{listitem.toString()}</li>
+                );
+                })}
+              </ul>
+            </div>
           </div>
-          <div className="pc-item"><span className="procon-title">Cons:</span>
-          <ul>
-            {conslist.map((listitem, idx) => {
-              return (
-              <li key={idx}>{listitem.toString()}</li>
-            );
-            })}
-          </ul>
-          </div>
-        </div></div></div>}
+        </div>
+      </div>}
     </div>
   )
 }
