@@ -17,21 +17,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #fff;
 }
 .titleitems {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
+.pc-item {
+  width: 50%;
+  padding: 1.5em;
+}
+.pc-item:nth-child(1) {
+  background-color: #c2ff99;
+}
+.pc-item:nth-child(2) {
+  background-color: #f7d7dc;
+}
+
 .pros-cons {
+  display: flex;
   max-width: 80em;
-  display: grid;
-  grid-auto-flow: column;
-  column-gap: 0.5em;
-  border: 4px solid var(--secondary-accent-color);
-  box-shadow: 4px 4px 10px 0 var(--secondary-accent-color);
-  padding: 3em;
-  border-radius: 2em;
+  /* column-gap: 0.5em; */
+  /* border: 4px solid var(--secondary-accent-color); */
+  /* box-shadow: 4px 4px 10px 0 var(--secondary-accent-color); */
+  /* padding: 3em; */
+  /* border-radius: 2em; */
   font-family: "IBM Plex sans";
   background-color: #fff;
 }
@@ -55,6 +66,7 @@
 .prodTitle {
   font-family: var(--default-font);
   font-size: 20px;
+  padding-right: 1em;
 }
 
 /* Spinner */
@@ -189,4 +201,10 @@ input[type="text"] {
 .emailSendButton:hover {
   background: var(--secondary-accent-color);
   color: #fff;
+}
+
+@media (max-width: 600px) {
+  .pros-cons {
+    flex-direction: column;
+  }
 }

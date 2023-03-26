@@ -9,7 +9,7 @@ export default function Searchbar(props) {
   }
 
   return (
-    <div className="searchbar-container">
+    <div className="searchbar-container" style={{width: "75%"}}>
       <form className="search" onSubmit={(e) => {
         handleSubmit(e, document.getElementById("searchTerm").value);
       }}>

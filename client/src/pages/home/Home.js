@@ -107,7 +107,7 @@ export default function Home() {
         </div>
         <div className="product-summary-section">
         <div className="pros-cons">
-          <div><span className="procon-title">Pros:</span>
+          <div className="pc-item"><span className="procon-title">Pros:</span>
           <ul>
             {prolist.map((listitem, idx) => {
               return (
@@ -116,7 +116,7 @@ export default function Home() {
             })}
           </ul>
           </div>
-          <div><span className="procon-title">Cons:</span>
+          <div className="pc-item"><span className="procon-title">Cons:</span>
           <ul>
             {conslist.map((listitem, idx) => {
               return (
