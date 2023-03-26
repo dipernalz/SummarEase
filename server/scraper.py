@@ -49,6 +49,20 @@ def get_reviews(soup):
     ]
 
 
+def get_title(soup):
+    return list(filter(
+        lambda i: i.attrs.get("data-hook", "") == "product-link",
+        soup.find_all("a"),
+    ))[0].text
+
+
+def get_image(soup):
+    return list(filter(
+        lambda i: i.attrs.get("data-hook", "") == "cr-product-image",
+        soup.find_all("img"),
+    ))[0].attrs["src"]
+
+
 def get_chatgpt_output(prompt):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -65,7 +79,7 @@ def get_chatgpt_output(prompt):
 def main():
     url = sys.argv[1]
     product_id = get_product_id(url)
-    output = {"pros": [], "cons": []}
+    output = {"pros": [], "cons": [], "title": "", "image": ""}
     if product_id is not None:
         sources = get_source([
             f"{review_url}/{product_id}?filterByStar={review_type}"
@@ -73,7 +87,10 @@ def main():
         ])
         reviews = []
         for source in sources:
-            reviews += get_reviews(BeautifulSoup(source, "lxml"))
+            soup = BeautifulSoup(source, "lxml")
+            reviews += get_reviews(soup)
+            output["title"] = get_title(soup)
+            output["image"] = get_image(soup)
         reviews.sort(key=lambda x: len(x))
         prompt = "Pros and cons of the product from this review:\n\n"
         i = 0
