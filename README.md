@@ -1,5 +1,5 @@
-# hoohacks2023
-HooHacks 2023 project
+# SummarEase
+Enter a product listing URL from Amazon.com and receive a summary of the pros and cons of the product
 
 # Dependencies
 To run the project, ensure that `npm` and `pip3` are installed. 
