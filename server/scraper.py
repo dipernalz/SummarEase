@@ -1,6 +1,7 @@
 #!/bin/python3
 
 from bs4 import BeautifulSoup
+from dotenv import dotenv_values
 import json
 import openai
 import re
@@ -8,7 +9,7 @@ from selenium import webdriver
 import sys
 
 
-openai.api_key = "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"
+openai.api_key = dotenv_values(".env")["OPENAI_API_KEY"]
 
 
 review_url = f"https://www.amazon.com/product-reviews"
