@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import "./searchbar.css";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 export default function Searchbar(props) {
   
@@ -8,6 +9,13 @@ export default function Searchbar(props) {
     console.log("Searchbar calling prop fn");
     props.urlCallback(searchTerm);
   }
+
+  const handleFocus = () => {
+    console.log("input field");
+    speak({ text: "Enter listing url" });
+  }
+
+  const { speak } = useSpeechSynthesis();
 
   return (
     <div>
@@ -20,6 +28,7 @@ export default function Searchbar(props) {
           className="searchTerm"
           placeholder="Enter listing url"
           required
+          onFocus={handleFocus}
         />
         <button className="searchButton">
           <SearchIcon className="searchIcon" />

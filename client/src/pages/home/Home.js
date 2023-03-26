@@ -1,5 +1,6 @@
 import Searchbar from "../../components/searchbar/Searchbar";
 import React, { useState } from 'react';
+import { useSpeechSynthesis } from "react-speech-kit";
 import "./home.css";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
   // const [responseData, setResponseData] = useState({});
   const [prolist, setProlist] = useState([]);
   const [conslist, setConlist] = useState([]);
+  const { speak, cancel } = useSpeechSynthesis();
   
   const queryBackend = async (searchVal) => {
     console.log("callback function called");
@@ -47,6 +49,31 @@ export default function Home() {
     }
 
   }
+
+  const prosFocus = () => {
+    console.log("pros focus");
+    speak({ text: "Pros" });
+  }
+  
+  const prosClick = (text) => {
+    console.log("pros click");
+    speak({ text: text });
+  }
+
+  const consFocus = () => {
+    console.log("cons focus");
+    speak({ text: "Cons" });
+  }
+  
+  const consClick = (text) => {
+    console.log("cons click");
+    speak({ text: text });
+  }
+
+  const cancelSpeech = () => {
+    cancel();
+  }
+
   return (
     <div className="home-page">
       <Searchbar urlCallback={queryBackend}/>
@@ -56,7 +83,8 @@ export default function Home() {
       </div>}
       </div>
       {successfulLoad && <div className="product-summary-section">
-        <div>Pros:</div>
+        <button onFocus={prosFocus} onClick={(text) => {prosClick(prolist.join(". "))}}>Pros</button>
+        <button onClick={cancelSpeech}>Stop</button>
         <ul>
           {prolist.map((listitem, idx) => {
             return (
@@ -64,7 +92,8 @@ export default function Home() {
           );
           })}
         </ul>
-        <div>Cons: </div>
+        <button onFocus={consFocus} onClick={(text) => {consClick(conslist.join(". "))}}>Cons</button>
+        <button onClick={cancelSpeech}>Stop</button>
         <ul>
           {conslist.map((listitem, idx) => {
             return (
