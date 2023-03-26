@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div className="header-container">
 
-      <div className="text-title">SummarEase</div>
+      <div className="logogroup"><img className="imgLogo" alt="SummarEase logo" src="summarease.png"></img><div className="text-title">SummarEase</div></div>
 
       <div>
       {/* Center */}

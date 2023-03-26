@@ -99,7 +99,7 @@ export default function Home() {
     <div className="home-page">
       <div className="info-section">
         <div className="info-blurb">
-          Amazon product review summarizer.<br/>Enter a product listing url from amazon.com, and receive a summary of the pros and cons of the product!
+          Amazon product review summarizer.<br/>Enter a product listing URL from Amazon.com and receive a summary of the pros and cons of the product!
         </div>
       </div>
       <Searchbar urlCallback={queryBackend}/>
