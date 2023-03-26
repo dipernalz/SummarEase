@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div className="header-container">
 
-      <div className="text-title">SumarEase</div>
+      <div className="text-title">SummarEase</div>
 
       <div>
       {/* Center */}

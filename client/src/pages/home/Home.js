@@ -77,16 +77,17 @@ export default function Home() {
       <Searchbar urlCallback={queryBackend}/>
       <div>
         {/* {!isLoading && <p>Amazon review stuff:</p>} */}
-      {isLoading && <div><p>Loading...</p>
+      {isLoading && <div><p className="loading">Loading...</p><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>}
       </div>
       {successfulLoad &&
-        <div>
+        <div className="emailsender-container">
         <form className="emailsender" onSubmit={(e) => {
           handleSubmitEmail(e, document.getElementById("emailTerm").value);
         }}>
           <input 
             id="emailTerm"
+            className="emailTerm"
             type="text"
             placeholder="Enter your email"
             required
