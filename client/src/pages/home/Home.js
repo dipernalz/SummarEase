@@ -225,7 +225,7 @@ export default function Home() {
         </div>
         <div className="product-summary-section">
           <div className="pros-cons">
-            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <IconButton onClick={cancelSpeech}><StopCircleIcon /></IconButton>}
+            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <IconButton onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
               <ul>
                 {prolist.map((listitem, idx) => {
                   return (
@@ -234,7 +234,7 @@ export default function Home() {
                 })}
               </ul>
             </div>
-            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <IconButton onClick={cancelSpeech}><StopCircleIcon /></IconButton>}
+            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <IconButton onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
               <ul>
                 {conslist.map((listitem, idx) => {
                   return (
