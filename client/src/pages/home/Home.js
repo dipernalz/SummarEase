@@ -41,6 +41,36 @@ export default function Home() {
   const [isSpeakingPros, setIsSpeakingPros] = useState(false);
   const [isSpeakingCons, setIsSpeakingCons] = useState(false);
   const rate = 1.7;
+  const [showModalPopup, setShowModalPopup] = useState(false);
+  // const isShowPopup = (status) => {  
+  //   setShowModalPopup(status);
+  // };
+  const showModal = () => {
+    setShowModalPopup(true);
+  }
+  const hideModal = () => {
+    setShowModalPopup(false);
+  }
+  // const hideModal = useCallback(() => {
+  //   setShowModalPopup(false);
+  // });
+  React.useEffect(() => {
+    document.addEventListener("keydown", hideModal, false);
+    // return () => {
+    //   document.removeEventListener("keydown", hideModal, false);
+    // };
+  }, [hideModal]);
+
+  // document.body.onkeyup = function(e) {
+  // if (e.key == " " ||
+  //     e.code == "Space" ||      
+  //     e.keyCode == 32      
+  // ) {
+  //   if(showModalPopup) {
+  //     hideModal();
+  //   }
+  // }
+// }
   
   const queryBackend = async (searchVal) => {
     setIsLoading(true);
@@ -53,8 +83,9 @@ export default function Home() {
     }).then(response => {
         if (response.ok) {
           setIsLoading(false);
-          return response.json()
+          return response.json();
         } else {
+
           throw response;
         }
       });
@@ -68,9 +99,13 @@ export default function Home() {
         setSuccessfulLoad(true);
       } else {
         console.log("Scraping/summary failed");
+        setIsLoading(false);
+        setSuccessfulLoad(false);
+        setShowModalPopup(true);
         console.log(resultData);
       }
     } catch (error) {
+      console.error(error);
       console.error(error);
     }
   }
@@ -211,6 +246,16 @@ export default function Home() {
           </div>
         </div>
       </div>}
+      
+    {/* <button onClick={showModal}></button> */}
+      {showModalPopup &&
+        <div id="myModal" className="modal">
+{/* Modal content */}
+          <div className="modal-content">
+              <span onClick={hideModal} className="close">&times;</span>
+              <p>Error occurred processing request. Please try again. Press any key to close this message.</p>
+          </div>
+        </div>}
     </div>
   )
 }

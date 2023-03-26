@@ -45,7 +45,7 @@ app.post('/api/product', (req, res,next) => {
         if(dataToSend !== undefined) {
             res.status(200).json(dataToSend);
         } else {
-            res.status(500);
+            res.status(500).send();
         }
     });
 });
