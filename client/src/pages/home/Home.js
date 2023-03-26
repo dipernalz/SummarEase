@@ -6,6 +6,8 @@ import "./home.css";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [successfulLoad, setSuccessfulLoad] = useState(false);
+  const [productTitle, setProductTitle] = useState("");
+  const [productImg, setProductImg] = useState("");
   // const [responseData, setResponseData] = useState({});
   const [prolist, setProlist] = useState([]);
   const [conslist, setConlist] = useState([]);
@@ -29,8 +31,10 @@ export default function Home() {
     console.log(resultData);
     try {
       if(resultData.status === "success") {
+        setProductTitle(resultData.title);
         setProlist(resultData.pros);
         setConlist(resultData.cons);
+        setProductImg(resultData.image);
         setSuccessfulLoad(true);
       } else {
         console.log("Scraping/summary failed");
@@ -77,7 +81,7 @@ export default function Home() {
       <Searchbar urlCallback={queryBackend}/>
       <div>
         {/* {!isLoading && <p>Amazon review stuff:</p>} */}
-      {isLoading && <div><p className="loading">Loading...</p><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      {isLoading && <div><p className="loading">Loading...</p><div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </div>}
       </div>
       {successfulLoad &&
@@ -97,28 +101,31 @@ export default function Home() {
           </button>
         </form>
         </div>}
-      {successfulLoad && <div className="product-summary-section">
-      <div className="pros-cons">
-        <div><span className="procon-title">Pros:</span>
-        <ul>
-          {prolist.map((listitem, idx) => {
-            return (
-            <li key={idx}>{listitem.toString()}</li>
-          );
-          })}
-        </ul>
+      {successfulLoad && <div className="product-card">
+        <div className="titleitems"><div className="prodTitle">{productTitle}</div>
+          <img src={productImg}></img>
         </div>
-        <div><span className="procon-title">Cons:</span>
-        <ul>
-          {conslist.map((listitem, idx) => {
-            return (
-            <li key={idx}>{listitem.toString()}</li>
-          );
-          })}
-        </ul>
-        </div>
-      </div>
-      </div>}
+        <div className="product-summary-section">
+        <div className="pros-cons">
+          <div><span className="procon-title">Pros:</span>
+          <ul>
+            {prolist.map((listitem, idx) => {
+              return (
+              <li key={idx}>{listitem.toString()}</li>
+            );
+            })}
+          </ul>
+          </div>
+          <div><span className="procon-title">Cons:</span>
+          <ul>
+            {conslist.map((listitem, idx) => {
+              return (
+              <li key={idx}>{listitem.toString()}</li>
+            );
+            })}
+          </ul>
+          </div>
+        </div></div></div>}
     </div>
   )
 }
