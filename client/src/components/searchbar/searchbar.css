@@ -2,6 +2,10 @@ input[type="text"] {
   margin: 0.5em 0;
   width: 80%;
 }
+.MuiOutlinedInput-notchedOutline{
+  border-color: var(--secondary-accent-color) !important;
+  border-width: 4px !important;
+}
 .search {
   justify-content: center;
   margin-top: 10px;
@@ -16,22 +20,25 @@ input[type="text"] {
   padding: 8px;
   height: 40px;
   border-radius: 20px 0 0 20px;
+  width: 75% !important;
   font-size: 16px;
   outline: none;
   color: var(--primary-color-dark);
 }
 .searchButton {
-  width: 64px;
-  height: 64px;
-  border: 4px solid var(--secondary-accent-color);
-  border-left: 0;
-  text-align: center;
-  border-radius: 0 20px 20px 0;
-  cursor: pointer;
-  background-color: #fff;
-  color: var(--primary-color-dark);
+  /* width: 64px;
+  height: 64px; */
+  color: var(--primary-color-dark) !important;
+  /* border-left: 0; */
+  /* text-align: center; */
+  /* border-radius: 0 20px 20px 0; */
+  /* cursor: pointer; */
+  /* background-color: #fff; */
 }
 .searchButton:hover {
   background: var(--secondary-accent-color);
   color: #fff;
+}
+.textFieldLabel {
+  color: var(--secondary-accent-color) !important;
 }
