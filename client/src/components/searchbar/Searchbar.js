@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { InputAdornment, IconButton } from '@mui/material';
 import "./searchbar.css";
 
+// import { useSpeechSynthesis } from "react-speech-kit";
 
 export default function Searchbar(props) {
   const handleSubmit = async (e, searchTerm) => {
@@ -32,12 +33,19 @@ export default function Searchbar(props) {
     }
   `;
 
+  // const { speak } = useSpeechSynthesis();
+  
+  const handleFocus = () => {
+    console.log("input field");
+    // speak({ text: "Enter listing url" });
+  }
+
   return (
     <div className="searchbar-container" style = {{ width: "75%" }}>
       <form className="search" onSubmit={(e) => {
         handleSubmit(e, document.getElementById("searchTerm").value);
       }}>
-        <CustomTextField style = {{ width: "100%" }} label="Enter listing url" type="search" id="searchTerm" required InputProps={{
+        <CustomTextField onFocus={handleFocus} style = {{ width: "100%" }} label="Enter listing url" type="search" id="searchTerm" required InputProps={{
           style: {
             marginBottom: -10
           },

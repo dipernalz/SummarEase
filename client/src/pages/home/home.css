@@ -60,6 +60,8 @@
 .procon-title {
   font-weight: 700;
   font-size: 18px;
+  background: transparent;
+  border: none;
 }
 
 .prodTitle {

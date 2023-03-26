@@ -4,6 +4,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import TextField from '@mui/material/TextField';
 import styled from "styled-components";
 import { InputAdornment, IconButton } from '@mui/material';
+import { useSpeechSynthesis } from "react-speech-kit";
 import "./home.css";
 
 export default function Home() {
@@ -14,6 +15,9 @@ export default function Home() {
   // const [responseData, setResponseData] = useState({});
   const [prolist, setProlist] = useState([]);
   const [conslist, setConlist] = useState([]);
+  const { speak, cancel } = useSpeechSynthesis();
+  const [isSpeakingPros, setIsSpeakingPros] = useState(false);
+  const [isSpeakingCons, setIsSpeakingCons] = useState(false);
   
   const queryBackend = async (searchVal) => {
     setIsLoading(true);
@@ -95,6 +99,35 @@ export default function Home() {
   `;
 
 
+
+  const prosFocus = () => {
+    console.log("pros focus");
+    speak({ text: "Pros" });
+  }
+  
+  const prosClick = (text) => {
+    console.log("pros click");
+    setIsSpeakingPros(true);
+    speak({ text: text });
+  }
+
+  const consFocus = () => {
+    console.log("cons focus");
+    speak({ text: "Cons" });
+  }
+  
+  const consClick = (text) => {
+    console.log("cons click");
+    setIsSpeakingCons(true);
+    speak({ text: text });
+  }
+
+  const cancelSpeech = () => {
+    cancel();
+    setIsSpeakingPros(false);
+    setIsSpeakingCons(false);
+  }
+
   return (
     <div className="home-page">
       <div className="info-section">
@@ -135,7 +168,7 @@ export default function Home() {
         </div>
         <div className="product-summary-section">
           <div className="pros-cons">
-            <div className="pc-item"><span className="procon-title">Pros:</span>
+            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <button onClick={cancelSpeech}>Stop</button>}
               <ul>
                 {prolist.map((listitem, idx) => {
                   return (
@@ -144,7 +177,7 @@ export default function Home() {
                 })}
               </ul>
             </div>
-            <div className="pc-item"><span className="procon-title">Cons:</span>
+            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <button onClick={cancelSpeech}>Stop</button>}
               <ul>
                 {conslist.map((listitem, idx) => {
                   return (
