@@ -4,15 +4,9 @@ import styled from "styled-components";
 import { InputAdornment, IconButton } from '@mui/material';
 import "./searchbar.css";
 
-// import { useSpeechSynthesis } from "react-speech-kit";
+import { useSpeechSynthesis } from "react-speech-kit";
 
-export default function Searchbar(props) {
-  const handleSubmit = async (e, searchTerm) => {
-    e.preventDefault();
-    props.urlCallback(searchTerm);
-  }
-
-  const CustomTextField = styled(TextField)`
+const CustomTextField = styled(TextField)`
     & label.Mui-focused {
       color: #0B0B45;
     }
@@ -33,25 +27,43 @@ export default function Searchbar(props) {
     }
   `;
 
-  // const { speak } = useSpeechSynthesis();
+export default function Searchbar(props) {
+  const rate = 1.7;
+
+  const handleSubmit = async (e, searchTerm) => {
+    e.preventDefault();
+    props.urlCallback(searchTerm);
+  }
+
+  const { speak } = useSpeechSynthesis();
   
   const handleFocus = () => {
     console.log("input field");
-    // speak({ text: "Enter listing url" });
+    speak({ 
+      text: "Enter listing url",
+      rate: rate
+    });
   }
+
+  const searchIconFocus = () => {
+    speak({ 
+      text: "Search",
+      rate: rate
+    });
+  }  
 
   return (
     <div className="searchbar-container" style = {{ width: "75%" }}>
       <form className="search" onSubmit={(e) => {
         handleSubmit(e, document.getElementById("searchTerm").value);
       }}>
-        <CustomTextField onFocus={handleFocus} style = {{ width: "100%" }} label="Enter listing url" type="search" id="searchTerm" required InputProps={{
+        <CustomTextField onFocus={handleFocus} style = {{ width: "100%" }} label="Enter listing URL" type="search" id="searchTerm" required InputProps={{
           style: {
             marginBottom: -10
           },
           endAdornment: (
             <InputAdornment position="end" style={{ paddingRight: 10 }}>
-              <IconButton edge="end" className="searchButton" type="submit">
+              <IconButton edge="end" className="searchButton" type="submit" onFocus={searchIconFocus}>
                 <SearchIcon />
               </IconButton>
             </InputAdornment>

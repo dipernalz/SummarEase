@@ -6,6 +6,28 @@ import styled from "styled-components";
 import { InputAdornment, IconButton } from '@mui/material';
 import { useSpeechSynthesis } from "react-speech-kit";
 import "./home.css";
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+
+const CustomTextField = styled(TextField)`
+& label.Mui-focused {
+  color: #0B0B45;
+}
+& label {
+  color: #0B0B45;
+}
+& .MuiOutlinedInput-root {
+  border-radius: 20px;
+  &.Mui-focused fieldset {
+    border-color: #c65102;
+  }
+  &:hover fieldset {
+    border-color: #c65102;
+  }
+  & fieldset {
+    border-color: #c65102;
+  }
+}
+`;
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +40,7 @@ export default function Home() {
   const { speak, cancel } = useSpeechSynthesis();
   const [isSpeakingPros, setIsSpeakingPros] = useState(false);
   const [isSpeakingCons, setIsSpeakingCons] = useState(false);
+  const rate = 1.7;
   
   const queryBackend = async (searchVal) => {
     setIsLoading(true);
@@ -77,55 +100,54 @@ export default function Home() {
     console.log("sent email");
   }
 
-  const CustomTextField = styled(TextField)`
-    & label.Mui-focused {
-      color: #0B0B45;
-    }
-    & label {
-      color: #0B0B45;
-    }
-    & .MuiOutlinedInput-root {
-      border-radius: 20px;
-      &.Mui-focused fieldset {
-        border-color: #c65102;
-      }
-      &:hover fieldset {
-        border-color: #c65102;
-      }
-      & fieldset {
-        border-color: #c65102;
-      }
-    }
-  `;
-
-
-
   const prosFocus = () => {
-    console.log("pros focus");
-    speak({ text: "Pros" });
+    speak({ 
+      text: "Pros",
+      rate: rate
+    });
   }
   
   const prosClick = (text) => {
-    console.log("pros click");
     setIsSpeakingPros(true);
-    speak({ text: text });
+    speak({ 
+      text: text,
+      rate: rate
+    });
   }
 
   const consFocus = () => {
-    console.log("cons focus");
-    speak({ text: "Cons" });
+    speak({ 
+      text: "Cons",
+      rate: rate
+    });
   }
   
   const consClick = (text) => {
-    console.log("cons click");
     setIsSpeakingCons(true);
-    speak({ text: text });
+    speak({ 
+      text: text,
+      rate: rate
+    });
   }
 
   const cancelSpeech = () => {
     cancel();
     setIsSpeakingPros(false);
     setIsSpeakingCons(false);
+  }
+
+  const emailFocus = () => {
+    speak({ 
+      text: "Enter your email",
+      rate: rate
+    });
+  }
+
+  const emailIconFocus = () => {
+    speak({ 
+      text: "Send email",
+      rate: rate
+    });
   }
 
   return (
@@ -146,10 +168,10 @@ export default function Home() {
           <form className="emailsender" onSubmit={(e) => {
             handleSubmitEmail(e, document.getElementById("emailTerm").value);
           }}>
-          <CustomTextField style = {{ width: "100%" }} label="Enter your email" type="search" id="emailTerm" required InputProps={{
+          <CustomTextField onFocus={emailFocus} style = {{ width: "100%" }} label="Enter your email" type="search" id="emailTerm" required InputProps={{
             endAdornment: (
               <InputAdornment position="end" style={{ paddingRight: 10 }}>
-                <IconButton edge="end" className="emailSendButton" type="submit">
+                <IconButton edge="end" className="emailSendButton" type="submit" onFocus={emailIconFocus}>
                   <EmailIcon />
                 </IconButton>
               </InputAdornment>
@@ -168,7 +190,7 @@ export default function Home() {
         </div>
         <div className="product-summary-section">
           <div className="pros-cons">
-            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <button onClick={cancelSpeech}>Stop</button>}
+            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <IconButton onClick={cancelSpeech}><StopCircleIcon /></IconButton>}
               <ul>
                 {prolist.map((listitem, idx) => {
                   return (
@@ -177,7 +199,7 @@ export default function Home() {
                 })}
               </ul>
             </div>
-            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <button onClick={cancelSpeech}>Stop</button>}
+            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <IconButton onClick={cancelSpeech}><StopCircleIcon /></IconButton>}
               <ul>
                 {conslist.map((listitem, idx) => {
                   return (
