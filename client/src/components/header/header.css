@@ -10,6 +10,7 @@
 
 .text-title {
   font-style: normal;
+  font-family: var(--default-font);
   color: white;
   text-decoration: none;
   font-weight: 400;

@@ -9,7 +9,6 @@ export default function Searchbar(props) {
   const { classes } = props;
   const handleSubmit = async (e, searchTerm) => {
     e.preventDefault();
-    console.log("Searchbar calling prop fn");
     props.urlCallback(searchTerm);
   }
 
@@ -39,7 +38,7 @@ export default function Searchbar(props) {
 `;
 
   return (
-    <div>
+    <div className="searchbar-container">
       <form className="search" onSubmit={(e) => {
         handleSubmit(e, document.getElementById("searchTerm").value);
       }}>
