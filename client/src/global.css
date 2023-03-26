@@ -1,6 +1,7 @@
 
 
 :root {
+  --default-font: "IBM Plex sans";
   /* 
     16px is the default font size set by browswers in the html tag.
     This should never be changed so that vision-impared users can override it.
@@ -11,12 +12,13 @@
   --defatul-font-size: 1.25rem;
 
   --primary-color-dark: #0B0B45;
-  --primary-background-color: #e0fbfc;
+  --primary-background-color: #ddddfa;
   --secondary-accent-color: #c65102;
 }
 body {
   padding: 0;
   margin: 0;
+  background-color: var(--primary-background-color);
 }
 main {
   margin: 0 auto 0 auto;
