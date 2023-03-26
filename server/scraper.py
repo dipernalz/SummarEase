@@ -16,8 +16,8 @@ review_types = ["positive", "critical"]
 
 
 def get_product_id(url):
-    search = re.search(r"[A-Z0-9]{10}", url)
-    return search.group(0) if search is not None else None
+    search = re.search(r"(/dp/|/gp/product/)([A-Z0-9]{10})", url)
+    return search.group(2) if search is not None else None
 
 
 def get_source(urls):
@@ -80,31 +80,34 @@ def main():
     url = sys.argv[1]
     product_id = get_product_id(url)
     output = {"pros": [], "cons": [], "title": "", "image": ""}
-    if product_id is not None:
-        sources = get_source([
-            f"{review_url}/{product_id}?filterByStar={review_type}"
-            for review_type in review_types
-        ])
-        reviews = []
-        for source in sources:
-            soup = BeautifulSoup(source, "lxml")
-            reviews += get_reviews(soup)
-            output["title"] = get_title(soup)
-            output["image"] = get_image(soup)
-        reviews.sort(key=lambda x: len(x))
-        prompt = "Pros and cons of the product from this review:\n\n"
-        i = 0
-        while i < len(reviews) and len(prompt) + len(reviews[i]) < 4000:
-            prompt += reviews[i]
-            i += 1
-        results = list(map(
-            lambda x: list(map(lambda y: y[2:].strip(), x.split("\n")[1:])),
-            get_chatgpt_output(prompt).split("\n\n"),
-        ))
-        output["pros"] = results[0]
-        output["cons"] = results[1]
-        output["status"] = "success"
-    else:
+    try:
+        if product_id is not None:
+            sources = get_source([
+                f"{review_url}/{product_id}?filterByStar={review_type}"
+                for review_type in review_types
+            ])
+            reviews = []
+            for source in sources:
+                soup = BeautifulSoup(source, "lxml")
+                reviews += get_reviews(soup)
+                output["title"] = get_title(soup)
+                output["image"] = get_image(soup)
+            reviews.sort(key=lambda x: len(x))
+            prompt = "Pros and cons of the product from this review:\n\n"
+            i = 0
+            while i < len(reviews) and len(prompt) + len(reviews[i]) < 4000:
+                prompt += reviews[i]
+                i += 1
+            results = list(map(
+                lambda x: list(map(lambda y: y[2:].strip(), x.split("\n")[1:])),
+                get_chatgpt_output(prompt).split("\n\n"),
+            ))
+            output["pros"] = results[0]
+            output["cons"] = results[1]
+            output["status"] = "success"
+        else:
+            output["status"] = "failure"
+    except:
         output["status"] = "failure"
     print(json.dumps(output))
     
