@@ -28,6 +28,9 @@ export default function Home() {
   const hideModal = () => {
     setShowModalPopup(false);
   }
+  // const hideModal = useCallback(() => {
+  //   setShowModalPopup(false);
+  // });
   React.useEffect(() => {
     document.addEventListener("keydown", hideModal, false);
     // return () => {
@@ -57,8 +60,9 @@ export default function Home() {
     }).then(response => {
         if (response.ok) {
           setIsLoading(false);
-          return response.json()
+          return response.json();
         } else {
+
           throw response;
         }
       });
@@ -79,9 +83,7 @@ export default function Home() {
       }
     } catch (error) {
       console.error(error);
-      setIsLoading(false);
-        setSuccessfulLoad(false);
-        setShowModalPopup(true);
+      console.error(error);
     }
   }
 
@@ -223,7 +225,7 @@ export default function Home() {
         </div>
       </div>}
       
-    <button onClick={showModal}></button>
+    {/* <button onClick={showModal}></button> */}
       {showModalPopup &&
         <div id="myModal" className="modal">
 {/* Modal content */}
