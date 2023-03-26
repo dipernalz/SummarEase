@@ -72,6 +72,9 @@
   font-size: 20px;
   padding-right: 1em;
 }
+.stopiconbtn {
+  transform: translateY(-0.08em);
+}
 
 /* Spinner */
 .lds-roller {

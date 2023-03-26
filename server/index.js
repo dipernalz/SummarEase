@@ -44,7 +44,6 @@ app.post('/api/emailsave', (req, res) => {
         from: 'summarease.reviews@gmail.com', // Change to your verified sender
         subject: 'Your SummarEased Amazon Review',
         text: `Here is your requested amazon review summary ${req.body.content}`,
-        html: '<strong>HELP ME<strong>',
     }
 
     sgMail

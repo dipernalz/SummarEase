@@ -34,7 +34,6 @@ export default function Home() {
   const [successfulLoad, setSuccessfulLoad] = useState(false);
   const [productTitle, setProductTitle] = useState("");
   const [productImg, setProductImg] = useState("");
-  // const [responseData, setResponseData] = useState({});
   const [prolist, setProlist] = useState([]);
   const [conslist, setConlist] = useState([]);
   const { speak, cancel } = useSpeechSynthesis();
@@ -42,35 +41,15 @@ export default function Home() {
   const [isSpeakingCons, setIsSpeakingCons] = useState(false);
   const rate = 1.7;
   const [showModalPopup, setShowModalPopup] = useState(false);
-  // const isShowPopup = (status) => {  
-  //   setShowModalPopup(status);
-  // };
   const showModal = () => {
     setShowModalPopup(true);
   }
   const hideModal = () => {
     setShowModalPopup(false);
   }
-  // const hideModal = useCallback(() => {
-  //   setShowModalPopup(false);
-  // });
   React.useEffect(() => {
     document.addEventListener("keydown", hideModal, false);
-    // return () => {
-    //   document.removeEventListener("keydown", hideModal, false);
-    // };
   }, [hideModal]);
-
-  // document.body.onkeyup = function(e) {
-  // if (e.key == " " ||
-  //     e.code == "Space" ||      
-  //     e.keyCode == 32      
-  // ) {
-  //   if(showModalPopup) {
-  //     hideModal();
-  //   }
-  // }
-// }
   
   const queryBackend = async (searchVal) => {
     setIsLoading(true);
@@ -194,7 +173,6 @@ export default function Home() {
       </div>
       <Searchbar urlCallback={queryBackend}/>
       <div>
-        {/* {!isLoading && <p>Amazon review stuff:</p>} */}
         {isLoading && <div><p className="loading">Loading...</p><div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>}
       </div>
@@ -225,7 +203,7 @@ export default function Home() {
         </div>
         <div className="product-summary-section">
           <div className="pros-cons">
-            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <IconButton onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
+            <div className="pc-item"><button className="procon-title" onFocus={prosFocus} onClick={() => {prosClick(prolist.join(". "))}}>Pros:</button>{isSpeakingPros && <IconButton className="stopiconbtn" onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
               <ul>
                 {prolist.map((listitem, idx) => {
                   return (
@@ -234,7 +212,7 @@ export default function Home() {
                 })}
               </ul>
             </div>
-            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <IconButton onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
+            <div className="pc-item"><button className="procon-title" onFocus={consFocus} onClick={() => {consClick(conslist.join(". "))}}>Cons:</button>{isSpeakingCons && <IconButton className="stopiconbtn" onClick={cancelSpeech}><StopCircleIcon/></IconButton>}
               <ul>
                 {conslist.map((listitem, idx) => {
                   return (
