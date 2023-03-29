@@ -28,7 +28,7 @@ const CustomTextField = styled(TextField)`
   }
 }
 `;
-
+window.utterances = [];
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [successfulLoad, setSuccessfulLoad] = useState(false);
@@ -39,7 +39,7 @@ export default function Home() {
   const { speak, cancel } = useSpeechSynthesis();
   const [isSpeakingPros, setIsSpeakingPros] = useState(false);
   const [isSpeakingCons, setIsSpeakingCons] = useState(false);
-  const rate = 1.7;
+  const rate = 2;
   const [showModalPopup, setShowModalPopup] = useState(false);
   const showModal = () => {
     setShowModalPopup(true);
@@ -122,11 +122,14 @@ export default function Home() {
   }
   
   const prosClick = (text) => {
+    var utterance = new SpeechSynthesisUtterance( text );
     setIsSpeakingPros(true);
-    speak({ 
-      text: text,
-      rate: rate
-    });
+    utterance.rate=rate;
+    utterance.onend = function() {
+      setIsSpeakingPros(false);
+    };
+    window.utterances.push( utterance );
+    speechSynthesis.speak(utterance);
   }
 
   const consFocus = () => {
@@ -137,11 +140,14 @@ export default function Home() {
   }
   
   const consClick = (text) => {
+    var utterance = new SpeechSynthesisUtterance( text );
     setIsSpeakingCons(true);
-    speak({ 
-      text: text,
-      rate: rate
-    });
+    utterance.rate=rate;
+    utterance.onend = function() {
+      setIsSpeakingCons(false);
+    };
+    window.utterances.push( utterance );
+    speechSynthesis.speak(utterance);
   }
 
   const cancelSpeech = () => {
